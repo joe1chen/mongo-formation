@@ -20,15 +20,15 @@
 
         "InstanceType" : {
             "Type" : "String",
-            "Default" : "m1.large",
-            "AllowedValues" : [ "m1.small", "m1.large", "m1.xlarge", "m2.xlarge", "m2.2xlarge", "m2.4xlarge", "c1.xlarge", "cc1.4xlarge" ],
+            "Default" : "m3.medium",
+            "AllowedValues" : [ "m1.small", "m1.large", "m1.xlarge", "m2.xlarge", "m2.2xlarge", "m2.4xlarge", "m3.medium", "m3.large", "m3.xlarge", "m3.2xlarge", "c1.xlarge", "cc1.4xlarge" ],
             "Description" : "EC2 instance type (e.g.: m1.large, m1.xlarge, m2.xlarge)"
         },
 
         "VolumeSize" : {
             "Description" : "Volume size for each EBS volume",
             "Type" : "Number",
-            "Default" : "10"
+            "Default" : "100"
         },
 
         "ReplicaSetName" : {
@@ -47,24 +47,28 @@
             "m2.xlarge"   : { "Arch" : "64" },
             "m2.2xlarge"  : { "Arch" : "64" },
             "m2.4xlarge"  : { "Arch" : "64" },
+            "m3.medium"   : { "Arch" : "64" },
+            "m3.large"    : { "Arch" : "64" },
+            "m3.xlarge"   : { "Arch" : "64" },
+            "m3.2xlarge"  : { "Arch" : "64" },
             "c1.medium"   : { "Arch" : "64" },
             "c1.xlarge"   : { "Arch" : "64" },
             "cc1.4xlarge" : { "Arch" : "64HVM" }
         },
 
         "RegionImageZone" : {
-            "us-east-1"     : { "64" : "ami-a73758ce", "64HVM" : "ami-a73758ce" },
-            "us-west-2"     : { "64" : "ami-0358ce33", "64HVM" : "ami-d75bcde7" },
-            "us-west-1"     : { "64" : "ami-3ffed17a", "64HVM" : "ami-47fed102" },
-            "eu-west-1"     : { "64" : "ami-c7c0d6b3", "64HVM" : "ami-d1c0d6a5" },
-            "ap-southeast-1": { "64" : "ami-fade91a8", "64HVM" : "ami-18de914a" },
-            "ap-southeast-2": { "64" : "ami-39b23d38", "64HVM" : "ami-2db33c2c" },
-            "ap-northeast-1": { "64" : "ami-d16bfbeb", "64HVM" : "ami-876bfbbd" },
-            "sa-east-1"     : { "64" : "ami-5253894f", "64HVM" : "ami-38538925" }
+            "us-east-1"     : { "64" : "ami-fb8e9292", "64HVM" : "ami-978d91fe" },
+            "us-west-2"     : { "64" : "ami-043a5034", "64HVM" : "ami-383a5008" },
+            "us-west-1"     : { "64" : "ami-7aba833f", "64HVM" : "ami-5aba831f" },
+            "eu-west-1"     : { "64" : "ami-2918e35e", "64HVM" : "ami-4b18e33c" },
+            "ap-southeast-1": { "64" : "ami-b40d5ee6", "64HVM" : "ami-860d5ed4" },
+            "ap-southeast-2": { "64" : "ami-3b4bd301", "64HVM" : "ami-cf4ad2f5" },
+            "ap-northeast-1": { "64" : "ami-c9562fc8", "64HVM" : "ami-bb562fba" },
+            "sa-east-1"     : { "64" : "ami-215dff3c", "64HVM" : "ami-635dff7e" }
         },
 
         "RegionZone" : {
-            "us-east-1"     : {"AZ1" : "us-east-1a", "AZ2" : "us-east-1b", "AZ3" : "us-east-1b", "AZ4" : "us-east-1d", "AZ5" : "us-east-1e"},
+            "us-east-1"     : {"AZ1" : "us-east-1a", "AZ2" : "us-east-1d", "AZ3" : "us-east-1e"},
             "us-west-1"     : {"AZ1" : "us-west-1a", "AZ2" : "us-west-1b", "AZ3" : "us-west-1c"},
             "us-west-2"     : {"AZ1" : "us-west-2a", "AZ2" : "us-west-2b"},
             "eu-west-1"     : {"AZ1" : "eu-west-1a", "AZ2" : "eu-west-1b", "AZ3" : "eu-west-1c"},
@@ -130,7 +134,7 @@
         "ReplicaSetMember1" : {
             "Type" : "AWS::CloudFormation::Stack",
             "Properties" : {
-                "TemplateURL" : "https://s3-eu-west-1.amazonaws.com/mongodb-clngs/MongoNodeCLNGS-2.cftemplate",
+                "TemplateURL" : "http://dogo-cloudformation.s3.amazonaws.com/MongoNodeCLNGS-2.cftemplate",
                 "Parameters" : {
                     "KeyName" : { "Ref" : "KeyName" },
                     "InstanceType" : { "Ref" : "InstanceType" },
@@ -148,7 +152,7 @@
             "Type" : "AWS::CloudFormation::Stack",
             "DependsOn" : "ReplicaSetMember1",
             "Properties" : {
-                "TemplateURL" : "https://s3-eu-west-1.amazonaws.com/mongodb-clngs/MongoNodeCLNGS-2.cftemplate",
+                "TemplateURL" : "http://dogo-cloudformation.s3.amazonaws.com/MongoNodeCLNGS-2.cftemplate",
                 "Parameters" : {
                     "KeyName" : { "Ref" : "KeyName" },
                     "InstanceType" : { "Ref" : "InstanceType" },
